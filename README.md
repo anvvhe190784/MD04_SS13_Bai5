@@ -43,3 +43,12 @@ Hệ thống bao gồm các dịch vụ:
 - Kiểm thử:
   - `POST http://localhost:8888/identity/api/auth/login` -> chuyển tiếp thành công đến `identity-service:8080/api/auth/login`.
   - Gọi sai tiền tố `/wrong-path/**` -> Gateway trả về HTTP 404 Not Found.
+
+---
+
+## [Bài tập 5] Chặn bắt và Validate JWT tại API Gateway
+- Triển khai `GlobalFilter` (`JwtAuthenticationFilter`) tại `gateway-service`:
+  - Cho phép truy cập không cần token đối với các API Auth (`/identity/api/auth/**`, `/api/auth/**`).
+  - Chặn bắt Header `Authorization: Bearer <token>`.
+  - Giải mã và kiểm tra tính hợp lệ của JWT (sai chữ ký, hết hạn, thiếu token).
+  - Trả về mã lỗi HTTP 401 Unauthorized dưới dạng JSON chuẩn, không gây crash Gateway.
